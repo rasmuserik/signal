@@ -71,14 +71,10 @@ The challenge is that two web clients cannot connect directly to each other. The
 
 Let **A** be the client the receives the incoming connection request, and **B** be the one requesting the connection.
 
-**A** listens for incoming connections by `?recv=signal&since=$(NOW)`.
-
-**B** decides on a random *keyTemp*, listen for one message on `?recv=$(keyTemp)`, and sends `?send=$(sha256("signal"))&msg=$(sha256(keyTemp))`, i.e. `?send=0EGSTBWIWvbQZTCkJcbb_8gFIBUMTdJk9AtDZLEkIag&msg=uU0nuZNNPgilLlLX2n2r-sSE7-N6U4DukIj3rOLvzek`
-
-**A** receives the *sha_keyTemp* from **B**. decides on a random *keyAB*, and listens on `?recv=$(keyAB)`, and sends `?send=$(sha256_keyTemp)&msg=$(sha256(keyAB))`, i.e. `?send=uU0nuZNNPgilLlLX2n2r-sSE7-N6U4DukIj3rOLvzek&msg=i33xQ9kccW7PpfwXMAIva0IbBc7e6P1SsfxlqWAwrVI`
-
-**B** receives *sha_keyAB* from **A**, decides on a random *keyBA*, listens for messages on `?recv=$(keyBA)`, and sends `?send=$(sha_keyAB)&msg=$(sha256(keyBA))`, i.e. `?send=i33xQ9kccW7PpfwXMAIva0IbBc7e6P1SsfxlqWAwrVI&msg=j0NDRmSPa5bfid2pAcUXaxCm2Dlh3TwayItZstwyeqQ`
-
-**A** and **B** can now exchange webrtc signalling informations with each other.
+1. **A** listens for incoming connections by `?recv=signal&since=$(NOW)`.
+2. **B** decides on a random *keyTemp*, listen for one message on `?recv=$(keyTemp)`, and sends `?send=$(sha256("signal"))&msg=$(sha256(keyTemp))`, i.e. `?send=0EGSTBWIWvbQZTCkJcbb_8gFIBUMTdJk9AtDZLEkIag&msg=uU0nuZNNPgilLlLX2n2r-sSE7-N6U4DukIj3rOLvzek`
+3. **A** receives the *sha_keyTemp* from **B**. decides on a random *keyAB*, and listens on `?recv=$(keyAB)`, and sends `?send=$(sha256_keyTemp)&msg=$(sha256(keyAB))`, i.e. `?send=uU0nuZNNPgilLlLX2n2r-sSE7-N6U4DukIj3rOLvzek&msg=i33xQ9kccW7PpfwXMAIva0IbBc7e6P1SsfxlqWAwrVI`
+4. **B** receives *sha_keyAB* from **A**, decides on a random *keyBA*, listens for messages on `?recv=$(keyBA)`, and sends `?send=$(sha_keyAB)&msg=$(sha256(keyBA))`, i.e. `?send=i33xQ9kccW7PpfwXMAIva0IbBc7e6P1SsfxlqWAwrVI&msg=j0NDRmSPa5bfid2pAcUXaxCm2Dlh3TwayItZstwyeqQ`
+5. **A** and **B** can now exchange webrtc signalling informations with each other.
 
 It the responsibility of the p2p network of clients designate a single peer to listen for incoming connections on each signalling server.
