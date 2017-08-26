@@ -7,5 +7,7 @@ do
   SIGNAL_URL=http://localhost:1234/ node sample-implementation.js &
   echo $! > .pid
   sleep 1
-  curl http://localhost:1234/?status &
+  curl http://localhost:1234/?recv=signal&since=0
+  sleep 1
+  curl 'http://localhost:1234/?send=0EGSTBWIWvbQZTCkJcbb_8gFIBUMTdJk9AtDZLEkIag&msg=helloWorld' &
 done
